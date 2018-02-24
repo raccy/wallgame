@@ -1,7 +1,25 @@
-import "./dom.js";
-import "./score.js";
-import "./player.js";
-import "./wall.js";
-import "./field.js";
-import "./app.js";
-import "./control.js";
+/**
+ * メイン処理
+ */
+
+import App from "./app.js";
+
+// アプリケーションの設定
+const setting = {
+  field: {
+    width: 25,
+    height: 15,
+    wallGap: 7,
+    block: {
+      size: 20,
+      unit: 'px',
+    },
+  },
+  defaultSpeed: 500,
+};
+
+// アプリコンポーネントを生成します。
+const app = new App(setting);
+
+// アプリ開始します。
+app.start(document.body);

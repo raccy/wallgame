@@ -1,74 +1,76 @@
-/**
- * プレイヤーDOMを生成します。
- */
-const $player = createDivWithId('player');
+import Dom from './dom.js';
 
-/**
- * 現在のプレイヤーの位置を取得します。
- */
-const getPlayerPositions = () => getDomPositions($player)
-
-/**
- * プレイヤーDOMが壁DOMに重なるか調べます。
- */
-const playerOverlapsWall = (top, left, wallPosition) => {
-  const wallLeft = wallPosition.left;
-  const top2 = top + 20;
-  const wallTop = wallPosition.top;
-  const wallTop2 = wallTop + wallPosition.height;
-  if(
-    left === wallLeft
-    && (
-         (top > wallTop && top < wallTop2)
-      || (top2 > wallTop && top2 < wallTop2)
-      || (top === wallTop && top2 === wallTop2)
-    )
-  ) {
-    return true;
+export default class Player extends Dom {
+  constructor(filed, postion) {
+    super('player');
+    this._field = field;
+    this._position = position;
   }
-  return false;
-};
 
-/**
- * プレイヤーDOMを動かしていい場所か調べます。
- */
-const allowMovePlayer = (top, bottom, left, right) => {
-  if(top < 0 || bottom < 0 || left < 0 || right < 0) {
+  /**
+   * プレイヤーの位置を取得します。
+   */
+  get position() {
+    return this._position;
+  }
+
+  /**
+   * プレイヤーDOMが壁DOMに重なるか調べます。
+   */
+  overlapsWall(wall) {
+    if (this.position.x === wall.x && (
+      this.position.y <= wall.top.height ||
+      this.position.y >= this._field.height - wall.bottom.height)) {
+      return true;
+    }
     return false;
+  };
+
+  /**
+   * プレイヤーDOMを動かしていい場所か調べます。
+   */
+  allowMove() {
+    // フィールド内にあるかを調べます。
+    if (! this._field.within(this._position)){
+      return false;
+    }
+    // 壁にぶつかっていないかを調べます。
+    if (this._field.walls.any(wall => wall.within(this._position))) {
+      return false;
+    }
+    return true
   }
-  return getDomPositionsAllWalls().every(wallPosition => {
-    return !playerOverlapsWall(top, left, wallPosition);
-  });
-};
 
-/**
- * 壁DOMがプレイヤーDOMに衝突したか調べます。
- */
-const playerHitWall = () => {
-  const {top, left} = getPlayerPositions();
-  const newLeft = left + 20;
-  return getDomPositionsAllWalls().some(wallPosition => {
-    return playerOverlapsWall(top, newLeft, wallPosition);
-  });
-};
-
-/**
- * プレイヤーDOMを動かします。
- */
-const movePlayer = (moveTop, moveLeft) => {
-  const {top, bottom, left, right} = getPlayerPositions();
-  const newTop = top + moveTop;
-  const newBottom = bottom - moveTop;
-  const newLeft = left + moveLeft;
-  const newRight = right - moveLeft;
-  if(allowMovePlayer(newTop, newBottom, newLeft, newRight)) {
-    setDomStyle($player, 'top', `${newTop}px`);
-    setDomStyle($player, 'left', `${newLeft}px`);
+  /**
+   * 壁DOMがプレイヤーDOMに衝突したか調べます。
+   */
+  playerHitWal() {
+    const {top, left} = getPlayerpositions();
+    const newLeft = left + 20;
+    return getDompositionsAllWalls().some(wallposition => {
+      return playerOverlapsWall(top, newLeft, wallposition);
+    });
   }
-};
 
-const movePlayerUp = () => movePlayer(-20, 0);
-const movePlayerDown = () => movePlayer(20, 0);
-const movePlayerLeft = () => movePlayer(0, -20);
-const movePlayerRight = () => movePlayer(0, 20);
+  /**
+   * プレイヤーDOMを動かします。
+   */
+  move({x = 0, y = 0}) {
+    this._x += x;
+    this._y += y;
+    if(this.allowMove()) {
+      this.setStyle('left', this._field.blockLength(this._x));
+      this.setStyle('top', this._field.blockLength(this._y));
+    } else {
+      this._x -= x;
+      this._y -= y;
+    }
+  }
+
+  moveRight() { this.movePlayer({x: 1}); }
+  moveLeft() { this.movePlayer({x: -1}); }
+  moveDown() { this.movePlayer({y: 1}); }
+  moveUp() { this.movePlayer({y: -1}); }
+
+}
 
