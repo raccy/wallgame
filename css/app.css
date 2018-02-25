@@ -42,9 +42,11 @@ body {
   text-align: center;
   cursor: pointer;
 }
+
 .gameover:hover {
   background: #000c;
 }
+
 .gameover span {
   text-decoration: underline;
 }

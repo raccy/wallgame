@@ -13,5 +13,3 @@ export class Gameover extends Dom {
     this.addEventListener('click', () => location.reload());
   }
 }
-
-

@@ -73,7 +73,7 @@ export default class Field extends Dom {
   /**
    * フィールド内か確認します。
    */
-  within({x, y}) {
+  within({ x, y }) {
     return x >= 0 && x < this.width && y >= 0 && y < this._height;
   }
 

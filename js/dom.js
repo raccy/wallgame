@@ -111,7 +111,7 @@ export default class Dom {
    */
   getPositions() {
     const [top, bottom, left, right, height] =
-      this.getPositionsArray().map(property => parseInt(property));
+    this.getPositionsArray().map(property => parseInt(property));
     return { top, bottom, left, right, height };
   };
 

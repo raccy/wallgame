@@ -10,10 +10,7 @@ export default class App extends Dom {
   /**
    * コンストラクタ
    */
-  constructor({
-    filed,
-    defaultSpeed
-  }) {
+  constructor({ field, defaultSpeed }) {
     // アプリとして親クラスのコンストラクタを呼び出します。
     super('app');
     this._defaultSpeed = defaultSpeed;
@@ -119,4 +116,3 @@ export default class App extends Dom {
     return this._state === 'gameover';
   }
 }
-

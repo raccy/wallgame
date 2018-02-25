@@ -21,9 +21,9 @@ const generateRandomPair = (min, max, minSum, maxSum) => {
  */
 export default class Wall extends Dom {
   /*
-  * 壁の高さを配列で定義しておきます。
-  */
-  static set heights() {
+   * 壁の高さを配列で定義しておきます。
+   */
+  static get heights() {
     return [
       [20, 100],
       [40, 200],
@@ -83,10 +83,10 @@ export default class Wall extends Dom {
   /**
    * 壁と重なっているかを確認します。
    */
-  within({x, y}) {
+  within({ x, y }) {
     if (x === this._x && (
-      y <= this._top.height ||
-      y >= this._field.height - this._bottom.height)) {
+        y <= this._top.height ||
+        y >= this._field.height - this._bottom.height)) {
       return true;
     }
     return false;
@@ -137,8 +137,7 @@ const moveWall = $wall => {
  */
 const removeWallIfProtruded = $wall => {
   const left = parseInt(getDomStyle($wall, 'left'));
-  if(left < 0) {
+  if (left < 0) {
     removeDom($wall);
   }
 };
-

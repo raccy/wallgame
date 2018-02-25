@@ -19,8 +19,8 @@ export default class Player extends Dom {
    */
   overlapsWall(wall) {
     if (this.position.x === wall.x && (
-      this.position.y <= wall.top.height ||
-      this.position.y >= this._field.height - wall.bottom.height)) {
+        this.position.y <= wall.top.height ||
+        this.position.y >= this._field.height - wall.bottom.height)) {
       return true;
     }
     return false;
@@ -31,7 +31,7 @@ export default class Player extends Dom {
    */
   allowMove() {
     // フィールド内にあるかを調べます。
-    if (! this._field.within(this._position)){
+    if (!this._field.within(this._position)) {
       return false;
     }
     // 壁にぶつかっていないかを調べます。
@@ -45,7 +45,7 @@ export default class Player extends Dom {
    * 壁DOMがプレイヤーDOMに衝突したか調べます。
    */
   playerHitWal() {
-    const {top, left} = getPlayerpositions();
+    const { top, left } = getPlayerpositions();
     const newLeft = left + 20;
     return getDompositionsAllWalls().some(wallposition => {
       return playerOverlapsWall(top, newLeft, wallposition);
@@ -55,10 +55,10 @@ export default class Player extends Dom {
   /**
    * プレイヤーDOMを動かします。
    */
-  move({x = 0, y = 0}) {
+  move({ x = 0, y = 0 }) {
     this._x += x;
     this._y += y;
-    if(this.allowMove()) {
+    if (this.allowMove()) {
       this.setStyle('left', this._field.blockLength(this._x));
       this.setStyle('top', this._field.blockLength(this._y));
     } else {
@@ -67,10 +67,9 @@ export default class Player extends Dom {
     }
   }
 
-  moveRight() { this.movePlayer({x: 1}); }
-  moveLeft() { this.movePlayer({x: -1}); }
-  moveDown() { this.movePlayer({y: 1}); }
-  moveUp() { this.movePlayer({y: -1}); }
+  moveRight() { this.movePlayer({ x: 1 }); }
+  moveLeft() { this.movePlayer({ x: -1 }); }
+  moveDown() { this.movePlayer({ y: 1 }); }
+  moveUp() { this.movePlayer({ y: -1 }); }
 
 }
-
