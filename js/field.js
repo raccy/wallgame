@@ -12,6 +12,7 @@
  */
 
 import Dom from './dom.js';
+import Block from './block.js';
 import Player from './player.js';
 import Wall from './wall.js';
 
@@ -35,7 +36,7 @@ export default class Field extends Dom {
     this._width = width;
     this._height = height;
     this._wallGap = wallGap;
-    this._block = new block(block);
+    this._block = new Block(block);
 
     // プレイヤーの初期位置を左側の中央に設定します。
     const initPlayerPosition = {
@@ -52,14 +53,20 @@ export default class Field extends Dom {
 
     // 初期の壁の位置をプレイヤーから間隔分離れた位置に設定します。
     const initWallsPositionX = [
-      ...Array(Math.floor(this._width / this._gap) - 1).keys()
+      ...Array(Math.floor(this._width / this._wallGap) - 1).keys()
     ].map(i => (i + 1) * this._wallGap);
 
     // 壁DOMを組み込んでみます。
-    for (const x of initWallPositionX) {
+    for (const x of initWallsPositionX) {
       this.appendWall(x);
     }
   }
+
+  /**
+   * 読み込みプロパティ
+   */
+  get player() { return this._player; }
+  get walls() { return this._walls; }
 
   appendWall(x) {
     // 壁DOMを作成します。
@@ -70,11 +77,16 @@ export default class Field extends Dom {
     this._walls.push(wall);
   }
 
+  removeWall(wall) {
+    console.log(this._walls.filter(w => w !== wall));
+    this._walls = this._walls.filter(w => w !== wall);
+  }
+
   /**
    * フィールド内か確認します。
    */
   within({ x, y }) {
-    return x >= 0 && x < this.width && y >= 0 && y < this._height;
+    return x >= 0 && x < this._width && y >= 0 && y < this._height;
   }
 
   /**

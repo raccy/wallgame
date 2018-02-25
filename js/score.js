@@ -21,14 +21,16 @@ export default class Score extends Dom {
   /**
    * 現在のスコアを取得します。
    */
-  get point() { this._point; }
+  get point() { return this._point; }
 
   /**
    * スコアを増やします。
    */
-  plus(plus) {
-    this._point += plus;
-    this.dispalyScore();
+  plus(point) {
+    console.log(point);
+    this._point += point;
+    console.log(this._point);
+    this.render();
   }
 
   /**
@@ -36,7 +38,7 @@ export default class Score extends Dom {
    * @override
    */
   render() {
-    super.reder();
+    super.render();
     this.text = this._point.toString();
   }
 }

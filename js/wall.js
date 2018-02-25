@@ -20,65 +20,67 @@ const generateRandomPair = (min, max, minSum, maxSum) => {
  * 壁DOMクラス
  */
 export default class Wall extends Dom {
-  /*
-   * 壁の高さを配列で定義しておきます。
-   */
-  static get heights() {
-    return [
-      [20, 100],
-      [40, 200],
-      [60, 180],
-      [80, 100],
-      [100, 40],
-      [100, 80],
-      [100, 100],
-      [160, 40],
-      [160, 80],
-    ];
-  }
+  // /*
+  //  * 壁の高さを配列で定義しておきます。
+  //  */
+  // static get heights() {
+  //   return [
+  //     [20, 100],
+  //     [40, 200],
+  //     [60, 180],
+  //     [80, 100],
+  //     [100, 40],
+  //     [100, 80],
+  //     [100, 100],
+  //     [160, 40],
+  //     [160, 80],
+  //   ];
+  // }
 
-  /**
-   * 壁の高さ配列からランダムなインデックスを返します。
-   */
-  static getRandomIndex() {
-    return Math.floor(Math.random() * Wall.heights.length);
-  }
+  // /**
+  //  * 壁の高さ配列からランダムなインデックスを返します。
+  //  */
+  // static getRandomIndex() {
+  //   return Math.floor(Math.random() * Wall.heights.length);
+  // }
 
-  /**
-   * 壁の高さを定義されたものからランダムに選んで返します。
-   */
-  static getHeightRandomly() {
-    return Wall.heights[Wall.getRandomIndex()];
-  }
+  // /**
+  //  * 壁の高さを定義されたものからランダムに選んで返します。
+  //  */
+  // static getHeightRandomly() {
+  //   return Wall.heights[Wall.getRandomIndex()];
+  // }
 
 
   /**
    * コンストラクタ
    */
-  constructor(x, filed) {
+  constructor(x, field) {
     // 壁として親クラスのコンストラクタを呼び出します。
     super('wall');
 
-    // ブロックの情報をセットします。
-    this._block = block;
+    // フィールドをセットします。
+    this._field = field;
 
     // 位置をセットします。
     this._x = x;
-    this.setStyle('left', this._filed.bolckLength(this._x));
+    this.setStyle('left', this._field.blockLength(this._x));
 
     // 壁の高さをランダムに取得しておきます。
     const heightPair = generateRandomPair(1, 10, 6, 12)
 
     // 壁(上)DOMを生成します。
-    this._top = new WallPart('wallTop', heightPair[0], this._block);
+    this._top = new WallPart('wallTop', heightPair[0], this._field);
 
     // 壁(下)DOMを生成します。
-    this._bottom = new WallPart('wallBottom', heightPair[1], this._block);
+    this._bottom = new WallPart('wallBottom', heightPair[1], this._field);
 
     // 壁(枠)DOMに壁(上)DOMと壁(下)DOMを組み込みます。
     this.appendChild(this._top);
     this.appendChild(this._bottom);
   }
+
+  get position() { return { x: this._x, y: 0 }; }
 
   /**
    * 壁と重なっているかを確認します。
@@ -92,6 +94,15 @@ export default class Wall extends Dom {
     return false;
   }
 
+  /**
+   * 壁DOMを動かします。
+   */
+  move() {
+    this._x--;
+    this.setStyle('left', this._field.blockLength(this._x));
+  };
+
+
 }
 
 /**
@@ -101,8 +112,8 @@ class WallPart extends Dom {
   constructor(name, height, field) {
     super(name);
     this._height = height;
-    this._filed = field;
-    setStyle('height', this._field.blockSize(this._height));
+    this._field = field;
+    this.setStyle('height', this._field.blockLength(this._height));
   }
 
   get height() {
@@ -110,34 +121,26 @@ class WallPart extends Dom {
   }
 }
 
-/**
- * すべての壁の位置情報を返します。 
- */
-const getDomPositionsAllWalls = () => {
-  const $wallParts = findDomAll('.wallTop, .wallBottom');
-  return [...$wallParts].map($wallPart => {
-    const parentPosition = getDomPositions($wallPart.parentNode);
-    const returnPosition = getDomPositions($wallPart);
-    returnPosition.left = parentPosition.left;
-    returnPosition.right = parentPosition.right;
-    return returnPosition;
-  });
-};
+// /**
+//  * すべての壁の位置情報を返します。 
+//  */
+// const getDomPositionsAllWalls = () => {
+//   const $wallParts = findDomAll('.wallTop, .wallBottom');
+//   return [...$wallParts].map($wallPart => {
+//     const parentPosition = getDomPositions($wallPart.parentNode);
+//     const returnPosition = getDomPositions($wallPart);
+//     returnPosition.left = parentPosition.left;
+//     returnPosition.right = parentPosition.right;
+//     return returnPosition;
+//   });
+// };
 
-/**
- * 壁DOMを動かします。
- */
-const moveWall = $wall => {
-  const right = parseInt(getDomStyle($wall, 'right'));
-  setDomStyle($wall, 'right', `${right + 20}px`);
-};
-
-/**
- * エリアからはみ出た壁DOMを削除します。
- */
-const removeWallIfProtruded = $wall => {
-  const left = parseInt(getDomStyle($wall, 'left'));
-  if (left < 0) {
-    removeDom($wall);
-  }
-};
+// /**
+//  * エリアからはみ出た壁DOMを削除します。
+//  */
+// const removeWallIfProtruded = $wall => {
+//   const left = parseInt(getDomStyle($wall, 'left'));
+//   if (left < 0) {
+//     removeDom($wall);
+//   }
+// };

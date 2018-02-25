@@ -1,10 +1,10 @@
 import Dom from './dom.js';
 
 export default class Player extends Dom {
-  constructor(filed, postion) {
+  constructor(position, field) {
     super('player');
-    this._field = field;
     this._position = position;
+    this._field = field;
   }
 
   /**
@@ -35,7 +35,7 @@ export default class Player extends Dom {
       return false;
     }
     // 壁にぶつかっていないかを調べます。
-    if (this._field.walls.any(wall => wall.within(this._position))) {
+    if (this.hitWall()) {
       return false;
     }
     return true
@@ -44,12 +44,8 @@ export default class Player extends Dom {
   /**
    * 壁DOMがプレイヤーDOMに衝突したか調べます。
    */
-  playerHitWal() {
-    const { top, left } = getPlayerpositions();
-    const newLeft = left + 20;
-    return getDompositionsAllWalls().some(wallposition => {
-      return playerOverlapsWall(top, newLeft, wallposition);
-    });
+  hitWall() {
+    return this._field.walls.some(wall => wall.within(this._position));
   }
 
   /**
@@ -67,9 +63,9 @@ export default class Player extends Dom {
     }
   }
 
-  moveRight() { this.movePlayer({ x: 1 }); }
-  moveLeft() { this.movePlayer({ x: -1 }); }
-  moveDown() { this.movePlayer({ y: 1 }); }
-  moveUp() { this.movePlayer({ y: -1 }); }
+  moveRight() { this.move({ x: 1 }); }
+  moveLeft() { this.move({ x: -1 }); }
+  moveDown() { this.move({ y: 1 }); }
+  moveUp() { this.move({ y: -1 }); }
 
 }

@@ -5,7 +5,7 @@ export default class Dom {
   /**
    * コンストラクタ
    */
-  construtor(name, { klass } = {}) {
+  constructor(name, { klass } = {}) {
     this._name = name;
     this._dom = document.createElement('div');
     this._dom.classList.add(name);

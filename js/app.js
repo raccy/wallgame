@@ -25,7 +25,7 @@ export default class App extends Dom {
     // フィールドを作成します。
     this._field = new Field(field);
     // スコアを作成します。
-    this._score = new Scroe;
+    this._score = new Score;
     // ゲームオーバーを作成します。
     this._gameover = new Gameover;
 
@@ -40,7 +40,7 @@ export default class App extends Dom {
    */
   start(dom) {
     // アプリをDOMに組み込みます。
-    dom.appendChild(app.dom);
+    dom.appendChild(this._dom);
 
     // 移動したときに入るスコアを設定します。
     const plusScoreByMove = 15;
@@ -51,7 +51,7 @@ export default class App extends Dom {
         return;
       }
 
-      this._field.score.plus(plusScoreByMove);
+      this._score.plus(plusScoreByMove);
 
       switch (event.key) {
         case 'ArrowUp':
@@ -69,12 +69,12 @@ export default class App extends Dom {
       }
 
       if (this._field.player.hitWall()) {
-        setGameover();
+        this.setGameover();
       }
     });
 
     // タイマーを動作させます。
-    step(this._defaultSpeed);
+    this.step(this._defaultSpeed);
   }
 
   /**
@@ -82,36 +82,44 @@ export default class App extends Dom {
    */
   async step(speed) {
     // 速度分待ちます。
+    console.log(speed);
     await sleepMsec(speed);
+    console.log('done!');
 
-    if (isGameover()) {
+    if (this.isGameover()) {
       return;
     }
 
-    plus(10);
+    console.log(`app score point: ${this._score.point}`);
+    this._score.plus(10);
+    console.log(`app score point: ${this._score.point}`);
 
     // 各壁について移動を行い、枠外にある場合は削除します。
     for (const wall of this._field.walls) {
       wall.move()
-      if (!this._field.within(wall.positon)) {
+      console.log(wall.position);
+      console.log(this._field.within(wall.position));
+      if (!this._field.within(wall.position)) {
         this._field.removeWall(wall);
       }
     }
 
     // 最後の壁がwallGap以上に離れていれば、新たな壁を生成します。
+    console.log(this._field.walls);
     if (this._field.walls[this._field.walls.length - 1].position.x === this._field
       .wallGap) {
       this._field.appendWall();
     }
 
     if (this._field.player.hitWall()) {
-      setGameover();
+      this.setGameover();
     }
 
-    const scorePoint = this._field.score.point();
+    console.log(`app score point: ${this._score.point}`);
+    const scorePoint = this._score.point;
     const division = Math.floor(scorePoint / 10);
     const newSpeed = this._defaultSpeed - division;
-    step(newSpeed);
+    this.step(newSpeed);
   }
 
   /**
