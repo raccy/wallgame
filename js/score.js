@@ -27,9 +27,7 @@ export default class Score extends Dom {
    * スコアを増やします。
    */
   plus(point) {
-    console.log(point);
     this._point += point;
-    console.log(this._point);
     this.render();
   }
 

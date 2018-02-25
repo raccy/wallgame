@@ -82,32 +82,25 @@ export default class App extends Dom {
    */
   async step(speed) {
     // 速度分待ちます。
-    console.log(speed);
     await sleepMsec(speed);
-    console.log('done!');
 
     if (this.isGameover()) {
       return;
     }
 
-    console.log(`app score point: ${this._score.point}`);
     this._score.plus(10);
-    console.log(`app score point: ${this._score.point}`);
 
     // 各壁について移動を行い、枠外にある場合は削除します。
     for (const wall of this._field.walls) {
       wall.move()
-      console.log(wall.position);
-      console.log(this._field.within(wall.position));
       if (!this._field.within(wall.position)) {
         this._field.removeWall(wall);
       }
     }
 
     // 最後の壁がwallGap以上に離れていれば、新たな壁を生成します。
-    console.log(this._field.walls);
-    if (this._field.walls[this._field.walls.length - 1].position.x === this._field
-      .wallGap) {
+    if (this._field.walls[this._field.walls.length - 1].position.x ===
+      this._field.wallGap) {
       this._field.appendWall();
     }
 
@@ -115,7 +108,6 @@ export default class App extends Dom {
       this.setGameover();
     }
 
-    console.log(`app score point: ${this._score.point}`);
     const scorePoint = this._score.point;
     const division = Math.floor(scorePoint / 10);
     const newSpeed = this._defaultSpeed - division;

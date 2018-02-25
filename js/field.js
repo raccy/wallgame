@@ -78,7 +78,6 @@ export default class Field extends Dom {
   }
 
   removeWall(wall) {
-    console.log(this._walls.filter(w => w !== wall));
     this._walls = this._walls.filter(w => w !== wall);
   }
 
