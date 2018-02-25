@@ -1,10 +1,15 @@
+/**
+ * アプリモジュール
+ */
+
 import Field from './field.js';
 import Score from './score.js';
 import Dom from './dom.js';
 import Gameover from './gameover.js';
+import { sleepMsec } from './utils.js';
 
 /**
- * アプリDOMクラス
+ * アプリ クラス
  */
 export default class App extends Dom {
   /**
@@ -13,37 +18,40 @@ export default class App extends Dom {
   constructor({ field, defaultSpeed }) {
     // アプリとして親クラスのコンストラクタを呼び出します。
     super('app');
+
+    // アプリのインスタンス変数をセットします。
     this._defaultSpeed = defaultSpeed;
     this._state = 'wait';
-
-    // フィールドDOMを組み込みます。
+    // フィールドを作成します。
     this._field = new Field(field);
-    this.appendChild(this._field);
-
-    // スコアDOMを組み込みます。
+    // スコアを作成します。
     this._score = new Scroe;
-    this.appendChild(this._score);
-
+    // ゲームオーバーを作成します。
     this._gameover = new Gameover;
+
+    // フィールドを組み込みます。
+    this.appendChild(this._field);
+    // スコアを組み込みます。
+    this.appendChild(this._score);
   }
 
   /**
    * アプリをDOMに組み込んで開始します。
    */
   start(dom) {
-    // アプリDOMを組み込みます。
+    // アプリをDOMに組み込みます。
     dom.appendChild(app.dom);
 
+    // 移動したときに入るスコアを設定します。
+    const plusScoreByMove = 15;
 
-    /**
-     * キーダウンでプレイヤーを動かします。
-     */
+    // キーダウンでプレイヤーを動かします。
     document.addEventListener('keydown', event => {
       if (this.isGameover()) {
         return;
       }
 
-      this._field.score.plusScore(15);
+      this._field.score.plus(plusScoreByMove);
 
       switch (event.key) {
         case 'ArrowUp':
@@ -60,45 +68,50 @@ export default class App extends Dom {
           break;
       }
 
-      if (playerHitWall()) {
+      if (this._field.player.hitWall()) {
         setGameover();
       }
     });
 
-    //
+    // タイマーを動作させます。
     step(this._defaultSpeed);
   }
-
 
   /**
    * タイマーを始動させます。
    */
-  step(speed) {
-    const timer = setTimeout(() => {
-      if (isGameover()) {
-        return;
+  async step(speed) {
+    // 速度分待ちます。
+    await sleepMsec(speed);
+
+    if (isGameover()) {
+      return;
+    }
+
+    plus(10);
+
+    // 各壁について移動を行い、枠外にある場合は削除します。
+    for (const wall of this._field.walls) {
+      wall.move()
+      if (!this._field.within(wall.positon)) {
+        this._field.removeWall(wall);
       }
+    }
 
-      plusScore(10);
+    // 最後の壁がwallGap以上に離れていれば、新たな壁を生成します。
+    if (this._field.walls[this._field.walls.length - 1].position.x === this._field
+      .wallGap) {
+      this._field.appendWall();
+    }
 
-      findDomAll('.wall').forEach($wall => {
-        moveWall($wall);
-        removeWallIfProtruded($wall)
-      });
+    if (this._field.player.hitWall()) {
+      setGameover();
+    }
 
-      if (getDomPositions(findDom('.wall:last-child')).right === 140) {
-        $field.appendChild(createWall(0));
-      }
-
-      if (playerHitWall()) {
-        setGameover();
-      }
-
-      const currentScore = getCurrentScore();
-      const division = Math.floor(currentScore / 10);
-      const newSpeed = this._defaultSpeed - division;
-      step(newSpeed);
-    }, speed);
+    const scorePoint = this._field.score.point();
+    const division = Math.floor(scorePoint / 10);
+    const newSpeed = this._defaultSpeed - division;
+    step(newSpeed);
   }
 
   /**
@@ -106,7 +119,7 @@ export default class App extends Dom {
    */
   setGameover() {
     this._state = 'gameover';
-    this.appendChild(this._gamevore);
+    this.appendChild(this._gameover);
   };
 
   /**

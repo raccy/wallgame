@@ -1,6 +1,6 @@
 import Dom from './dom.js';
 
-export class Gameover extends Dom {
+export default class Gameover extends Dom {
   constructor() {
     super('gameover');
     /**

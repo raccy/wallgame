@@ -15,7 +15,7 @@ const setting = {
       unit: 'px',
     },
   },
-  defaultSpeed: 500,
+  defaultSpeed: 500, // ミリ秒
 };
 
 // アプリコンポーネントを生成します。

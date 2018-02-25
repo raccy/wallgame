@@ -1,9 +1,9 @@
-import { Component } from './dom.js'
+import Dom from './dom.js'
 
 /**
  * スコアコンポーネントクラス
  */
-export default class Score extends Component {
+export default class Score extends Dom {
   /**
    * コンストラクタ
    */
@@ -12,31 +12,31 @@ export default class Score extends Component {
     super('score');
 
     // 初期のスコア値を与えます。
-    this._score = 0;
+    this._point = 0;
 
     // スコア値を表示します。
-    this.dispalyScore();
+    this.render();
   }
 
   /**
    * 現在のスコアを取得します。
    */
-  getCurrentScore() {
-    this._score;
-  }
+  get point() { this._point; }
 
   /**
    * スコアを増やします。
    */
-  plusScore(plus) {
-    this._score += plus;
+  plus(plus) {
+    this._point += plus;
     this.dispalyScore();
   }
 
   /**
-   * スコア値をDOMに反映します。
+   * 描画します。
+   * @override
    */
-  displayScore() {
-    this.setDomText(this._score);
+  render() {
+    super.reder();
+    this.text = this._point.toString();
   }
 }

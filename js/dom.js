@@ -156,6 +156,13 @@ export default class Dom {
   addEventListener(event, func) {
     this._dom.addEventListener(event, func);
   }
+
+  /**
+   * 描画します。
+   */
+  render() {
+    // 何もしない。
+  }
 }
 
 // /**
