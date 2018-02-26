@@ -20,7 +20,7 @@ export default class Block {
    * @param {number} size 一つのブロックのサイズ
    * @param {string} unit 単位
    */
-  consturctor({ size, unit } /*: {size: number, unit: string} */ ) {
+  constructor({ size, unit } /*: {size: number, unit: string} */ ) {
     this._size = size;
     this._unit = unit;
     this._radius = this._size / 5;

@@ -92,13 +92,13 @@ export default class Field extends Dom {
    * ブロックあたりの長さを返します。
    */
   blockLength(number = 1) {
-    this._block.length(number);
+    return this._block.length(number);
   }
 
   /**
    * ブロックの角の半径を返します。
    */
   blockBoderRadius(borderWidth = 0) {
-    this._block.borderRadisu(borderWidth);
+    return this._block.borderRadisu(borderWidth);
   }
 }

@@ -5,7 +5,9 @@ export default class Player extends Dom {
     super('player');
     this._position = position;
     this._field = field;
-  }
+    this.setStyle('left', this._field.blockLength(this._position.x));
+    this.setStyle('top', this._field.blockLength(this._position.y));
+}
 
   /**
    * プレイヤーの位置を取得します。
@@ -52,14 +54,14 @@ export default class Player extends Dom {
    * プレイヤーDOMを動かします。
    */
   move({ x = 0, y = 0 }) {
-    this._x += x;
-    this._y += y;
+    this._position.x += x;
+    this._position.y += y;
     if (this.allowMove()) {
-      this.setStyle('left', this._field.blockLength(this._x));
-      this.setStyle('top', this._field.blockLength(this._y));
+      this.setStyle('left', this._field.blockLength(this._position.x));
+      this.setStyle('top', this._field.blockLength(this._position.y));
     } else {
-      this._x -= x;
-      this._y -= y;
+      this._position.x -= x;
+      this._position.y -= y;
     }
   }
 
