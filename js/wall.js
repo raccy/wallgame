@@ -1,3 +1,9 @@
+/**
+ * 壁モジュール
+ * @module Wall
+ */
+// @flow
+
 import Dom from './dom.js';
 
 const randomInt = (number) => {
@@ -20,38 +26,6 @@ const generateRandomPair = (min, max, minSum, maxSum) => {
  * 壁DOMクラス
  */
 export default class Wall extends Dom {
-  // /*
-  //  * 壁の高さを配列で定義しておきます。
-  //  */
-  // static get heights() {
-  //   return [
-  //     [20, 100],
-  //     [40, 200],
-  //     [60, 180],
-  //     [80, 100],
-  //     [100, 40],
-  //     [100, 80],
-  //     [100, 100],
-  //     [160, 40],
-  //     [160, 80],
-  //   ];
-  // }
-
-  // /**
-  //  * 壁の高さ配列からランダムなインデックスを返します。
-  //  */
-  // static getRandomIndex() {
-  //   return Math.floor(Math.random() * Wall.heights.length);
-  // }
-
-  // /**
-  //  * 壁の高さを定義されたものからランダムに選んで返します。
-  //  */
-  // static getHeightRandomly() {
-  //   return Wall.heights[Wall.getRandomIndex()];
-  // }
-
-
   /**
    * コンストラクタ
    */
@@ -120,27 +94,3 @@ class WallPart extends Dom {
     return this._height;
   }
 }
-
-// /**
-//  * すべての壁の位置情報を返します。 
-//  */
-// const getDomPositionsAllWalls = () => {
-//   const $wallParts = findDomAll('.wallTop, .wallBottom');
-//   return [...$wallParts].map($wallPart => {
-//     const parentPosition = getDomPositions($wallPart.parentNode);
-//     const returnPosition = getDomPositions($wallPart);
-//     returnPosition.left = parentPosition.left;
-//     returnPosition.right = parentPosition.right;
-//     return returnPosition;
-//   });
-// };
-
-// /**
-//  * エリアからはみ出た壁DOMを削除します。
-//  */
-// const removeWallIfProtruded = $wall => {
-//   const left = parseInt(getDomStyle($wall, 'left'));
-//   if (left < 0) {
-//     removeDom($wall);
-//   }
-// };

@@ -1,8 +1,8 @@
-// @flow
 /**
- * block.js
- * @module block
+ * ブロックモジュール
+ * @module Block
  */
+// @flow
 
 /**
  * ブロッククラス

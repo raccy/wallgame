@@ -1,4 +1,10 @@
 /**
+ * DOMモジュール
+ * @module Dom
+ */
+// @flow
+
+/**
  * DOMクラス
  */
 export default class Dom {
@@ -164,31 +170,3 @@ export default class Dom {
     // 何もしない。
   }
 }
-
-// /**
-//  * ID付DIVを生成して返します。
-//  */
-// const createDivWithId = id => {
-//   const $div = document.createElement('div');
-//   $div.id = id;
-//   return $div;
-// };
-//
-// /**
-//  * className付DIVを生成して返します。
-//  */
-// const createDivWithClassName = className => {
-//   const $div = document.createElement('div');
-//   $div.classList.add(className);
-//   return $div;
-// };
-//
-// /**
-//  * DOMを見つけて最初のものを返します。
-//  */
-// const findDom = selector => document.querySelector(selector);
-//
-// /**
-//  * DOMを見つけてすべて返します。
-//  */
-// const findDomAll = selector => document.querySelectorAll(selector);

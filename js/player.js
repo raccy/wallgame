@@ -1,3 +1,9 @@
+/**
+ * プレーヤーモジュール
+ * @module Player
+ */
+// @flow
+
 import Dom from './dom.js';
 
 export default class Player extends Dom {

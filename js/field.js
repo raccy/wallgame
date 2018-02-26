@@ -1,5 +1,6 @@
 /**
  * フィールド
+ * @module Field
  * 
  * フィールドのy軸は下になります。
  * <pre>
@@ -10,6 +11,7 @@
  *   y
  * </pre>
  */
+// @flow
 
 import Dom from './dom.js';
 import Block from './block.js';

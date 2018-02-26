@@ -1,6 +1,8 @@
 /**
  * アプリモジュール
+ * @module App
  */
+// @flow
 
 import Field from './field.js';
 import Score from './score.js';

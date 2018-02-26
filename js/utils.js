@@ -1,6 +1,8 @@
 /**
  * ユーティリティーモジュール
+ * @module utility
  */
+// @flow
 
 export const sleepMsec = msec =>
   new Promise(resolve => setTimeout(resolve, msec));

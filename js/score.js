@@ -1,3 +1,9 @@
+/**
+ * スコアモジュール
+ * @module Score
+ */
+// @flow
+
 import Dom from './dom.js'
 
 /**

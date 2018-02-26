@@ -1,3 +1,9 @@
+/**
+ * ゲームオーバーモジュール
+ * @module Gameoverl
+ */
+// @flow
+
 import Dom from './dom.js';
 
 export default class Gameover extends Dom {
