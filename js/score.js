@@ -10,6 +10,10 @@ import Dom from './dom.js'
  * スコアコンポーネントクラス
  */
 export default class Score extends Dom {
+  /*::
+  _point: number;
+  */
+
   /**
    * コンストラクタ
    */
@@ -27,12 +31,12 @@ export default class Score extends Dom {
   /**
    * 現在のスコアを取得します。
    */
-  get point() { return this._point; }
+  get point() /*: number */ { return this._point; }
 
   /**
    * スコアを増やします。
    */
-  plus(point) {
+  plus(point /*: number */ ) {
     this._point += point;
     this.render();
   }

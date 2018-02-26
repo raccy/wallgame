@@ -10,14 +10,31 @@ import Dom from './dom.js';
 import Gameover from './gameover.js';
 import { sleepMsec } from './utils.js';
 
+/*::
+import type { FieldSetting } from './field.js';
+type AppSetting = {
+  field: FieldSetting,
+  defaultSpeed: number,
+};
+*/
+
+
 /**
  * アプリ クラス
  */
 export default class App extends Dom {
+  /*::
+  _defaultSpeed: number;
+  _state: string;
+  _field: Field;
+  _score: Score;
+  _gameover: Gameover;
+  */
+
   /**
    * コンストラクタ
    */
-  constructor({ field, defaultSpeed }) {
+  constructor({ field, defaultSpeed } /*: AppSetting */ ) {
     // アプリとして親クラスのコンストラクタを呼び出します。
     super('app');
 
@@ -40,7 +57,7 @@ export default class App extends Dom {
   /**
    * アプリをDOMに組み込んで開始します。
    */
-  start(dom) {
+  start(dom /*: Node */ ) {
     // アプリをDOMに組み込みます。
     dom.appendChild(this._dom);
 
@@ -48,7 +65,7 @@ export default class App extends Dom {
     const plusScoreByMove = 15;
 
     // キーダウンでプレイヤーを動かします。
-    document.addEventListener('keydown', event => {
+    document.addEventListener('keydown', (event /*: KeyboardEvent */ ) => {
       if (this.isGameover()) {
         return;
       }
@@ -82,7 +99,7 @@ export default class App extends Dom {
   /**
    * タイマーを始動させます。
    */
-  async step(speed) {
+  async step(speed /*: number */ ) {
     // 速度分待ちます。
     await sleepMsec(speed);
 

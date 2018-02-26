@@ -5,28 +5,36 @@
 // @flow
 
 import Dom from './dom.js';
+/*::
+import type Field, { Position } from './field.js';
+import type Wall from './wall.js';
+*/
 
 export default class Player extends Dom {
-  constructor(position, field) {
+  /*::
+  _position: Position;
+  _field: Field;
+  */
+  constructor(position /*: Position */ , field /*: Field */ ) {
     super('player');
     this._position = position;
     this._field = field;
     this.setStyle('left', this._field.blockLength(this._position.x));
     this.setStyle('top', this._field.blockLength(this._position.y));
-}
+  }
 
   /**
    * プレイヤーの位置を取得します。
    */
-  get position() {
+  get position() /*: Position */ {
     return this._position;
   }
 
   /**
    * プレイヤーDOMが壁DOMに重なるか調べます。
    */
-  overlapsWall(wall) {
-    if (this.position.x === wall.x && (
+  overlapsWall(wall /*: Wall */ ) {
+    if (this.position.x === wall.position.x && (
         this.position.y <= wall.top.height ||
         this.position.y >= this._field.height - wall.bottom.height)) {
       return true;
@@ -59,7 +67,7 @@ export default class Player extends Dom {
   /**
    * プレイヤーDOMを動かします。
    */
-  move({ x = 0, y = 0 }) {
+  move({ x = 0, y = 0 } /*: { x?: number, y?: number } */ ) {
     this._position.x += x;
     this._position.y += y;
     if (this.allowMove()) {

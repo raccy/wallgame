@@ -8,18 +8,19 @@
  * DOMクラス
  */
 export default class Dom {
+  /*::
+  _name: string;
+  _dom: HTMLElement;
+  _parent: ?Dom;
+  _children: Array<Dom>;
+  */
   /**
    * コンストラクタ
    */
-  constructor(name, { klass } = {}) {
+  constructor(name /*: string */ ) {
     this._name = name;
     this._dom = document.createElement('div');
     this._dom.classList.add(name);
-    if (klass != null) {
-      for (const k of klass.split()) {
-        this._dom.classList.add(k);
-      }
-    }
     // 親DOMを初期化します。
     this._parent = null;
     // 子DOM一覧を初期化します。
@@ -29,27 +30,27 @@ export default class Dom {
   /**
    * DOM本体を取得します。
    */
-  get dom() { return this._dom; }
+  get dom() /*: HTMLElement */ { return this._dom; }
 
   /**
    * 親DOMを取得します。
    */
-  get parent() { return this._parent; }
+  get parent() /*: ?Dom */ { return this._parent; }
 
   /**
    * 親DOMをセットします。
    */
-  set parent(parent) { this._parent = parent; }
+  set parent(parent /*: ?Dom */ ) { this._parent = parent; }
 
   /**
    * 子DOMを取得します。
    */
-  get children() { return this._children; }
+  get children() /*: Array<Dom> */ { return this._children; }
 
   /**
    * 子DOMを追加します。
    */
-  appendChild(child) {
+  appendChild(child /*: Dom */ ) {
     // DOM本体に子DOM本体を追加します。
     this._dom.appendChild(child.dom);
     // 子DOM一覧に登録します。
@@ -61,7 +62,7 @@ export default class Dom {
   /**
    * 子DOMを削除します。
    */
-  removeChild(child) {
+  removeChild(child /*: Dom */ ) {
     if (this.children.includes(child)) {
       // DOM本体から子DOM本体を削除します。
       this._dom.removeChild(child.dom);
@@ -85,82 +86,82 @@ export default class Dom {
    * 算出スタイルのうち、
    * 指定したCSSプロパティのみを返します。
    */
-  getStyle(property) {
+  getStyle(property /*: string */ ) {
     return window.getComputedStyle(this._dom, null)[property];
   }
 
   /**
    * CSSスタイルをセットします。
    */
-  setStyle(property, value) {
-    this._dom.style[property] = value;
+  setStyle(property /*: string */ , value /*: string */ ) {
+    (this._dom.style /*: { [string]: string } */ )[property] = value;
   }
 
-  /**
-   * 算出スタイルのうち、
-   * 指定したCSSプロパティのみを配列にして返します。
-   */
-  getStyles(...properties) {
-    styles = window.getComputedStyle(this._dom, null);
-    return properties.map(property => styles[property]);
-  }
+  // /**
+  //  * 算出スタイルのうち、
+  //  * 指定したCSSプロパティのみを配列にして返します。
+  //  */
+  // getStyles(...properties /*: Array<string> */) {
+  //   const styles = window.getComputedStyle(this._dom, null);
+  //   return properties.map(property => styles[property]);
+  // }
 
-  /**
-   * ポジション情報に限定してCSSプロパティの配列を返します。
-   */
-  getPositionsArray() {
-    return this.getStyles('top', 'bottom', 'left', 'right', 'height');
-  }
+  // /**
+  //  * ポジション情報に限定してCSSプロパティの配列を返します。
+  //  */
+  // getPositionsArray() {
+  //   return this.getStyles('top', 'bottom', 'left', 'right', 'height');
+  // }
 
-  /**
-   * 位置情報をオブジェクトで返します。
-   */
-  getPositions() {
-    const [top, bottom, left, right, height] =
-    this.getPositionsArray().map(property => parseInt(property));
-    return { top, bottom, left, right, height };
-  };
+  // /**
+  //  * 位置情報をオブジェクトで返します。
+  //  */
+  // getPositions() {
+  //   const [top, bottom, left, right, height] =
+  //   this.getPositionsArray().map(property => parseInt(property));
+  //   return { top, bottom, left, right, height };
+  // };
 
-  /**
-   * 属性を追加します。
-   */
-  setAttr(key, value) {
-    this._dom.setAttribute(key, value);
-  }
+  // /**
+  //  * 属性を追加します。
+  //  */
+  // setAttr(key, value) {
+  //   this._dom.setAttribute(key, value);
+  // }
 
-  /**
-   * 指定した属性を取得します。
-   */
-  getAttr(key) {
-    return this._dom.getAttribute(key);
-  }
+  // /**
+  //  * 指定した属性を取得します。
+  //  */
+  // getAttr(key) {
+  //   return this._dom.getAttribute(key);
+  // }
 
   /**
    * テキストをセットします。
    */
-  set text(text) {
+  set text(text /*: string */ ) {
     this._dom.textContent = text;
   }
 
   /**
    * HTMLをセットします。
    */
-  set html(text) {
+  set html(text /*: string */ ) {
     this._dom.innerHTML = text;
   }
 
   /**
    * テキストを取得します。
    */
-  get text() {
-    this._dom.textContent;
+  get text() /*: string */ {
+    return this._dom.textContent;
   }
 
   /**
    * イベントを追加します。
    */
-  addEventListener(event, func) {
-    this._dom.addEventListener(event, func);
+  addEventListener(event /*: string */ , func /*: (Event) => void */ ) {
+    return this._dom.addEventListener(event, func);
   }
 
   /**

@@ -4,6 +4,13 @@
  */
 // @flow
 
+/*::
+export type BlockSetting = {
+  size: number,
+  unit: string,
+}
+*/
+
 /**
  * ブロッククラス
  * 一つのブロックを表示するときのスタイルに関する情報を持ちます。
@@ -20,7 +27,7 @@ export default class Block {
    * @param {number} size 一つのブロックのサイズ
    * @param {string} unit 単位
    */
-  constructor({ size, unit } /*: {size: number, unit: string} */ ) {
+  constructor({ size, unit } /*: BlockSetting */ ) {
     this._size = size;
     this._unit = unit;
     this._radius = this._size / 5;
@@ -40,7 +47,7 @@ export default class Block {
    * @param {number} borderWidth ボーダーの幅
    * @return {string} 角の半径
    */
-  boderRadius(borderWidth /*: number */ = 0) /*: string */ {
+  borderRadius(borderWidth /*: number */ = 0) /*: string */ {
     return `${borderWidth + this._radius}${this._unit}`;
   }
 }

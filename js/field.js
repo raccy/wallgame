@@ -19,20 +19,38 @@ import Player from './player.js';
 import Wall from './wall.js';
 
 /*::
-type Position = {
+import type { BlockSetting } from './block.js';
+export type Position = {
   x: number,
   y: number,
-}
+};
+
+export type FieldSetting = {
+  width: number,
+  height: number,
+  wallGap: number,
+  block: BlockSetting,
+};
 */
+
 
 /**
  * フィールドDOMクラス
  */
 export default class Field extends Dom {
+  /*::
+  _width: number;
+  _height: number;
+  _wallGap: number;
+  _block: Block;
+  _player: Player;
+  _walls: Array<Wall>;
+  */
+
   /**
    * コンストラクタ
    */
-  constructor({ width, height, wallGap, block }) {
+  constructor({ width, height, wallGap, block } /*: FieldSetting */ ) {
     // フィールドとして親クラスのコンストラクタを呼び出します。
     super('field');
     this._width = width;
@@ -67,10 +85,16 @@ export default class Field extends Dom {
   /**
    * 読み込みプロパティ
    */
-  get player() { return this._player; }
-  get walls() { return this._walls; }
+  get width() /*: number */ { return this._width; }
+  get height() /*: number */ { return this._height; }
+  get wallGap() /*: number */ { return this._wallGap; }
+  get player() /*: Player */ { return this._player; }
+  get walls() /*: Array<Wall> */ { return this._walls; }
 
-  appendWall(x) {
+  appendWall(x /*: ?number */ ) {
+    if (x == null) {
+      x = this._width - 1;
+    }
     // 壁DOMを作成します。
     const wall = new Wall(x, this);
     // 子DOMとして登録します。
@@ -79,28 +103,28 @@ export default class Field extends Dom {
     this._walls.push(wall);
   }
 
-  removeWall(wall) {
+  removeWall(wall /*: Wall */ ) {
     this._walls = this._walls.filter(w => w !== wall);
   }
 
   /**
    * フィールド内か確認します。
    */
-  within({ x, y }) {
+  within({ x, y } /*: Position */ ) {
     return x >= 0 && x < this._width && y >= 0 && y < this._height;
   }
 
   /**
    * ブロックあたりの長さを返します。
    */
-  blockLength(number = 1) {
+  blockLength(number /*: number */ = 1) {
     return this._block.length(number);
   }
 
   /**
    * ブロックの角の半径を返します。
    */
-  blockBoderRadius(borderWidth = 0) {
-    return this._block.borderRadisu(borderWidth);
+  blockBoderRadius(borderWidth /*: number */ = 0) {
+    return this._block.borderRadius(borderWidth);
   }
 }

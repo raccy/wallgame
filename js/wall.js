@@ -6,6 +6,10 @@
 
 import Dom from './dom.js';
 
+/*::
+import type Field, { Position } from './field.js';
+*/
+
 const randomInt = (number) => {
   return Math.floor(Math.random() * number);
 }
@@ -26,10 +30,17 @@ const generateRandomPair = (min, max, minSum, maxSum) => {
  * 壁DOMクラス
  */
 export default class Wall extends Dom {
+  /*::
+  _x: number;
+  _field: Field;
+  _top: WallPart;
+  _bottom: WallPart;
+  */
+
   /**
    * コンストラクタ
    */
-  constructor(x, field) {
+  constructor(x /*: number */ , field /*: Field */ ) {
     // 壁として親クラスのコンストラクタを呼び出します。
     super('wall');
 
@@ -54,12 +65,14 @@ export default class Wall extends Dom {
     this.appendChild(this._bottom);
   }
 
-  get position() { return { x: this._x, y: 0 }; }
+  get position() /*: Position */ { return { x: this._x, y: 0 }; }
+  get top() /*: WallPart */ { return this._top; }
+  get bottom() /*: WallPart */ { return this._bottom; }
 
   /**
    * 壁と重なっているかを確認します。
    */
-  within({ x, y }) {
+  within({ x, y } /*: Position */ ) {
     if (x === this._x && (
         y <= this._top.height ||
         y >= this._field.height - this._bottom.height)) {
@@ -83,7 +96,11 @@ export default class Wall extends Dom {
  * 壁部品DOMクラス
  */
 class WallPart extends Dom {
-  constructor(name, height, field) {
+  /*::
+  _height: number;
+  _field: Field;
+  */
+  constructor(name /*: string */ , height /*: number */ , field /*: Field */ ) {
     super(name);
     this._height = height;
     this._field = field;

@@ -28,4 +28,6 @@ const setting = {
 const app = new App(setting);
 
 // アプリ開始します。
-app.start(document.body);
+if (document.body != null) {
+  app.start(document.body);
+}
