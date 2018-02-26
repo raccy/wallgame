@@ -118,8 +118,8 @@ export default class App extends Dom {
     }
 
     // 最後の壁がwallGap以上に離れていれば、新たな壁を生成します。
-    if (this._field.walls[this._field.walls.length - 1].position.x ===
-      this._field.wallGap) {
+    if (this._field.walls[this._field.walls.length - 1].position.x <=
+      (this._field.width - this._field.wallGap)) {
       this._field.appendWall();
     }
 

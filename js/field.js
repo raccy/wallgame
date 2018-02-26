@@ -73,7 +73,7 @@ export default class Field extends Dom {
 
     // 初期の壁の位置をプレイヤーから間隔分離れた位置に設定します。
     const initWallsPositionX = [
-      ...Array(Math.floor(this._width / this._wallGap) - 1).keys()
+      ...Array(Math.floor(this._width / this._wallGap)).keys()
     ].map(i => (i + 1) * this._wallGap);
 
     // 壁DOMを組み込んでみます。
@@ -104,6 +104,7 @@ export default class Field extends Dom {
   }
 
   removeWall(wall /*: Wall */ ) {
+    this.removeChild(wall);
     this._walls = this._walls.filter(w => w !== wall);
   }
 
