@@ -74,7 +74,7 @@ export default class Wall extends Dom {
    */
   within({ x, y } /*: Position */ ) {
     if (x === this._x && (
-        y <= this._top.height ||
+        y <= this._top.height - 1 ||
         y >= this._field.height - this._bottom.height)) {
       return true;
     }
