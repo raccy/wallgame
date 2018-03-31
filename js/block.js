@@ -8,6 +8,7 @@
 export type BlockSetting = {
   size: number,
   unit: string,
+  radius?: number,
 }
 */
 
@@ -24,13 +25,15 @@ export default class Block {
 
   /**
    * コンストラクタ
-   * @param {number} size 一つのブロックのサイズ
-   * @param {string} unit 単位
+   * @param {BlockSetting} blockSetting - ブロックの設定。
+   * @param {number} blockSetting.size - ブロックのサイズ。
+   * @param {string} blockSetting.unit - サイズの単位。
+   * @param {number} [blockSetting.radius] - 角の曲がり半径。
    */
-  constructor({ size, unit } /*: BlockSetting */ ) {
+  constructor({ size, unit, radius } /*: BlockSetting */ ) {
     this._size = size;
     this._unit = unit;
-    this._radius = this._size / 5;
+    this._radius = radius != null ? radius : this._size / 5;
   }
 
   /**
