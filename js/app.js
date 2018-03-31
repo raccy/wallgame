@@ -25,7 +25,7 @@ type AppSetting = {
 export default class App extends Dom {
   /*::
   _defaultSpeed: number;
-  _state: string;
+  _status: 'wait' | 'running' | 'gameover';
   _field: Field;
   _score: Score;
   _gameover: Gameover;
@@ -40,7 +40,7 @@ export default class App extends Dom {
 
     // アプリのインスタンス変数をセットします。
     this._defaultSpeed = defaultSpeed;
-    this._state = 'wait';
+    this._status = 'wait';
     // フィールドを作成します。
     this._field = new Field(field);
     // スコアを作成します。
@@ -137,7 +137,7 @@ export default class App extends Dom {
    * ゲームオーバーにします。
    */
   setGameover() {
-    this._state = 'gameover';
+    this._status = 'gameover';
     this.appendChild(this._gameover);
   };
 
@@ -145,6 +145,6 @@ export default class App extends Dom {
    * ゲームオーバーか調べます。
    */
   isGameover() {
-    return this._state === 'gameover';
+    return this._status === 'gameover';
   }
 }
