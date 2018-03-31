@@ -97,45 +97,6 @@ export default class Dom {
     (this._dom.style /*: { [string]: string } */ )[property] = value;
   }
 
-  // /**
-  //  * 算出スタイルのうち、
-  //  * 指定したCSSプロパティのみを配列にして返します。
-  //  */
-  // getStyles(...properties /*: Array<string> */) {
-  //   const styles = window.getComputedStyle(this._dom, null);
-  //   return properties.map(property => styles[property]);
-  // }
-
-  // /**
-  //  * ポジション情報に限定してCSSプロパティの配列を返します。
-  //  */
-  // getPositionsArray() {
-  //   return this.getStyles('top', 'bottom', 'left', 'right', 'height');
-  // }
-
-  // /**
-  //  * 位置情報をオブジェクトで返します。
-  //  */
-  // getPositions() {
-  //   const [top, bottom, left, right, height] =
-  //   this.getPositionsArray().map(property => parseInt(property));
-  //   return { top, bottom, left, right, height };
-  // };
-
-  // /**
-  //  * 属性を追加します。
-  //  */
-  // setAttr(key, value) {
-  //   this._dom.setAttribute(key, value);
-  // }
-
-  // /**
-  //  * 指定した属性を取得します。
-  //  */
-  // getAttr(key) {
-  //   return this._dom.getAttribute(key);
-  // }
-
   /**
    * テキストをセットします。
    */
