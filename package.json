@@ -2,13 +2,16 @@
   "name": "wallgame",
   "version": "0.0.0",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "check": "flow",
+    "server": "serve"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.40",
     "@babel/preset-env": "^7.0.0-beta.40",
     "flow-bin": "^0.67.1",
     "rollup": "^0.56.5",
-    "rollup-plugin-babel": "^4.0.0-beta.2"
+    "rollup-plugin-babel": "^4.0.0-beta.2",
+    "serve": "^6.5.3"
   }
 }
